@@ -31,6 +31,7 @@ public class WebDriverFacebookAccessor implements FacebookAccessor {
     public FacebookUser fetchUser(String username) {
         webDriver.get(BASE_URL + username);
         FacebookUser user = new FacebookUser();
+        user.setUsername(username);
         user.setName(fetchName());
         webDriver.get(BASE_URL + username + "/about?section=education");
         user.setExperience(experienceExtractor.extract(webDriver));
