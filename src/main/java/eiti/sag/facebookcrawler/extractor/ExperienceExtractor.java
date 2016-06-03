@@ -10,10 +10,10 @@ import org.openqa.selenium.WebElement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExperienceExtractor implements Extractor<Experience> {
+public class ExperienceExtractor extends PageletExtractor<Experience> {
 
     public Experience extract(WebDriver wd) {
-        WebElement pagelet = wd.findElement(By.id("pagelet_eduwork"));
+        WebElement pagelet = getPagelet(wd, "eduwork");
         List<Work> works = extractWorks(groupElement(pagelet, "work"));
         List<Education> education = extractEducationList(groupElement(pagelet, "edu"));
         return new Experience(works, education);

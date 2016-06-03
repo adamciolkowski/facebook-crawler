@@ -5,6 +5,7 @@ public class FacebookUser {
     private String username;
     private String name;
     private Experience experience;
+    private Places places;
 
     public String getUsername() {
         return username;
@@ -28,5 +29,13 @@ public class FacebookUser {
 
     public Experience getExperience() {
         return experience;
+    }
+
+    public Places getPlaces() {
+        return places;
+    }
+
+    public void setPlaces(Places places) {
+        this.places = places;
     }
 }
