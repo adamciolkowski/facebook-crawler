@@ -1,5 +1,8 @@
 package eiti.sag.facebookcrawler.accessor;
 
+import eiti.sag.facebookcrawler.extractor.ExperienceExtractor;
+import eiti.sag.facebookcrawler.extractor.Extractor;
+import eiti.sag.facebookcrawler.model.Experience;
 import eiti.sag.facebookcrawler.model.FacebookUser;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -9,6 +12,8 @@ public class WebDriverFacebookAccessor implements FacebookAccessor {
     private static final String BASE_URL = "https://www.facebook.com/";
 
     private final WebDriver webDriver;
+
+    private final Extractor<Experience> experienceExtractor = new ExperienceExtractor();
 
     public WebDriverFacebookAccessor(WebDriver webDriver) {
         this.webDriver = webDriver;
@@ -27,6 +32,8 @@ public class WebDriverFacebookAccessor implements FacebookAccessor {
         webDriver.get(BASE_URL + username);
         FacebookUser user = new FacebookUser();
         user.setName(fetchName());
+        webDriver.get(BASE_URL + username + "/about?section=education");
+        user.setExperience(experienceExtractor.extract(webDriver));
         return user;
     }
 

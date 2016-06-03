@@ -20,6 +20,7 @@ public class Main {
         accessor.login(email, password);
         FacebookUser user = accessor.fetchUser("zuck");
         System.out.println(user.getName());
+        System.out.println(user.getExperience());
         accessor.logout();
     }
 
