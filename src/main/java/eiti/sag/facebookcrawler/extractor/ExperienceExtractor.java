@@ -38,8 +38,9 @@ public class ExperienceExtractor extends PageletExtractor<Experience> {
         WebElement div = li.findElement(By.xpath(".//div[@class='_2lzr _50f5 _50f7']"));
         WebElement a = div.findElement(By.tagName("a"));
         String name = a.getText();
+        String info = extractInfo(li);
         String link = a.getAttribute("href");
-        return new Work(name, link);
+        return new Work(name, info, link);
     }
 
     private List<Education> extractEducationList(WebElement ulElement) {
@@ -56,8 +57,13 @@ public class ExperienceExtractor extends PageletExtractor<Experience> {
         WebElement div = li.findElement(By.xpath(".//div[@class='_2lzr _50f5 _50f7']"));
         WebElement a = div.findElement(By.tagName("a"));
         String name = a.getText();
+        String info = extractInfo(li);
         String link = a.getAttribute("href");
-        return new Education(name, link);
+        return new Education(name, info, link);
+    }
+
+    private String extractInfo(WebElement li) {
+        return li.findElement(By.xpath(".//div[@class='fsm fwn fcg']")).getText();
     }
 
 }
