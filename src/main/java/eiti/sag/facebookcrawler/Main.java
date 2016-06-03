@@ -2,6 +2,7 @@ package eiti.sag.facebookcrawler;
 
 import eiti.sag.facebookcrawler.accessor.FacebookAccessor;
 import eiti.sag.facebookcrawler.accessor.WebDriverFacebookAccessor;
+import eiti.sag.facebookcrawler.model.FacebookUser;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
@@ -17,6 +18,8 @@ public class Main {
         WebDriver webDriver = new FirefoxDriver();
         FacebookAccessor accessor = new WebDriverFacebookAccessor(webDriver);
         accessor.login(email, password);
+        FacebookUser user = accessor.fetchUser("zuck");
+        System.out.println(user.getName());
         accessor.logout();
     }
 

@@ -1,5 +1,6 @@
 package eiti.sag.facebookcrawler.accessor;
 
+import eiti.sag.facebookcrawler.model.FacebookUser;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -19,6 +20,18 @@ public class WebDriverFacebookAccessor implements FacebookAccessor {
         webDriver.findElement(By.id("email")).sendKeys(email);
         webDriver.findElement(By.id("pass")).sendKeys(password);
         webDriver.findElement(By.id("loginbutton")).click();
+    }
+
+    @Override
+    public FacebookUser fetchUser(String username) {
+        webDriver.get(BASE_URL + username);
+        FacebookUser user = new FacebookUser();
+        user.setName(fetchName());
+        return user;
+    }
+
+    private String fetchName() {
+        return webDriver.findElement(By.id("fb-timeline-cover-name")).getText();
     }
 
     @Override
