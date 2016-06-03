@@ -36,15 +36,18 @@ public class WebDriverFacebookAccessor implements FacebookAccessor {
         FacebookUser user = new FacebookUser();
         user.setUsername(username);
         user.setName(fetchName());
-        webDriver.get(BASE_URL + username + "/about?section=education");
-        user.setExperience(experienceExtractor.extract(webDriver));
-        webDriver.get(BASE_URL + username + "/about?section=living");
-        user.setPlaces(placesExtractor.extract(webDriver));
+        user.setExperience(extract(username, "education", experienceExtractor));
+        user.setPlaces(extract(username, "living", placesExtractor));
         return user;
     }
 
     private String fetchName() {
         return webDriver.findElement(By.id("fb-timeline-cover-name")).getText();
+    }
+
+    private <T> T extract(String username, String section, Extractor<T> extractor) {
+        webDriver.get(BASE_URL + username + "/about?section=" + section);
+        return extractor.extract(webDriver);
     }
 
     @Override
