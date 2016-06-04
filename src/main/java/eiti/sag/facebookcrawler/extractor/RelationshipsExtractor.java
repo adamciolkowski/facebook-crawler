@@ -15,10 +15,17 @@ public class RelationshipsExtractor extends PageletExtractor<Relationships> {
     @Override
     public Relationships extract(WebDriver wd) {
         WebElement pagelet = getPagelet(wd, "relationships");
-        WebElement family = pagelet.findElement(By.id("family-relationships-pagelet"));
+        WebElement family = familyElement(pagelet);
         WebElement ulElement = findUlElement(family);
         Collection<FamilyMember> familyMembers = fetchFamilyMembers(ulElement);
         return new Relationships(familyMembers);
+    }
+
+    private WebElement familyElement(WebElement pagelet) {
+        List<WebElement> e = pagelet.findElements(By.id("family-relationships-pagelet"));
+        if(!e.isEmpty())
+            return e.get(0);
+        return pagelet.findElement(By.xpath(".//div[@data-pnref='family']"));
     }
 
     private Collection<FamilyMember> fetchFamilyMembers(WebElement ulElement) {
