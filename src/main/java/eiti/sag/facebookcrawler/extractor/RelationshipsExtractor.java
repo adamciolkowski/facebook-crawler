@@ -39,10 +39,12 @@ public class RelationshipsExtractor extends PageletExtractor<Relationships> {
 
     private FamilyMember fetchFamilyMember(WebElement li) {
         WebElement span = li.findElement(By.xpath(".//span[@class='_50f5 _50f7']"));
-        WebElement a = span.findElement(By.tagName("a"));
+        List<WebElement> a = span.findElements(By.tagName("a"));
         List<WebElement> divs = li.findElements(By.xpath(".//div[@class='fsm fwn fcg']"));
         WebElement div = divs.get(divs.size() - 1);
-        return fetchFamilyMember(a, div);
+        if(a.isEmpty())
+            return new FamilyMember(null, span.getText(), div.getText());
+        return fetchFamilyMember(a.get(0), div);
     }
 
     private FamilyMember fetchFamilyMember(WebElement a, WebElement div) {
