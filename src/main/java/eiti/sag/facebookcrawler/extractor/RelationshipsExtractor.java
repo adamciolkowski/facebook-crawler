@@ -38,12 +38,16 @@ public class RelationshipsExtractor extends PageletExtractor<Relationships> {
     }
 
     private FamilyMember fetchFamilyMember(WebElement li) {
-        WebElement div = li.findElement(By.xpath(".//span[@class='_50f5 _50f7']"));
-        WebElement a = div.findElement(By.tagName("a"));
-        String name = a.getText();
-        String info = extractInfo(li);
+        WebElement span = li.findElement(By.xpath(".//span[@class='_50f5 _50f7']"));
+        WebElement a = span.findElement(By.tagName("a"));
+        List<WebElement> divs = li.findElements(By.xpath(".//div[@class='fsm fwn fcg']"));
+        WebElement div = divs.get(divs.size() - 1);
+        return fetchFamilyMember(a, div);
+    }
+
+    private FamilyMember fetchFamilyMember(WebElement a, WebElement div) {
         String link = a.getAttribute("href");
-        return new FamilyMember(link, name, info);
+        return new FamilyMember(link, a.getText(), div.getText());
     }
 
 }
