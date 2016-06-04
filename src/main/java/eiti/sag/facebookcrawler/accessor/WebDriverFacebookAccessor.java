@@ -1,9 +1,11 @@
 package eiti.sag.facebookcrawler.accessor;
 
+import eiti.sag.facebookcrawler.extractor.ContactExtractor;
 import eiti.sag.facebookcrawler.extractor.ExperienceExtractor;
 import eiti.sag.facebookcrawler.extractor.Extractor;
 import eiti.sag.facebookcrawler.extractor.RelationshipsExtractor;
 import eiti.sag.facebookcrawler.extractor.PlacesExtractor;
+import eiti.sag.facebookcrawler.model.ContactInfo;
 import eiti.sag.facebookcrawler.model.Experience;
 import eiti.sag.facebookcrawler.model.FacebookUser;
 import eiti.sag.facebookcrawler.model.Places;
@@ -20,6 +22,7 @@ public class WebDriverFacebookAccessor implements FacebookAccessor {
     private final Extractor<Experience> experienceExtractor = new ExperienceExtractor();
     private final Extractor<Places> placesExtractor = new PlacesExtractor();
     private final Extractor<Relationships> relationshipsExtractor = new RelationshipsExtractor();
+    private final Extractor<ContactInfo> contactInfoExtractor = new ContactExtractor();
 
     public WebDriverFacebookAccessor(WebDriver webDriver) {
         this.webDriver = webDriver;
@@ -42,6 +45,7 @@ public class WebDriverFacebookAccessor implements FacebookAccessor {
         user.setExperience(extract(username, "education", experienceExtractor));
         user.setPlaces(extract(username, "living", placesExtractor));
         user.setRelationships(extract(username, "relationship", relationshipsExtractor));
+        user.setContactInfo(extract(username, "contact-info", contactInfoExtractor));
         return user;
     }
 
