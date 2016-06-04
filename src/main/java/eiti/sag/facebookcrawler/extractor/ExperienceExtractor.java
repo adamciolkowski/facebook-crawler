@@ -21,7 +21,7 @@ public class ExperienceExtractor extends PageletExtractor<Experience> {
 
     private WebElement groupElement(WebElement pagelet, String ref) {
         WebElement e = pagelet.findElement(By.xpath(".//div[@data-pnref='" + ref + "']"));
-        return e.findElement(By.xpath(".//ul[@class='uiList fbProfileEditExperiences _4kg _4ks']"));
+        return findUlElement(e);
     }
 
     private List<Work> extractWorks(WebElement ulElement) {
@@ -60,10 +60,6 @@ public class ExperienceExtractor extends PageletExtractor<Experience> {
         String info = extractInfo(li);
         String link = a.getAttribute("href");
         return new Education(name, info, link);
-    }
-
-    private String extractInfo(WebElement li) {
-        return li.findElement(By.xpath(".//div[@class='fsm fwn fcg']")).getText();
     }
 
 }

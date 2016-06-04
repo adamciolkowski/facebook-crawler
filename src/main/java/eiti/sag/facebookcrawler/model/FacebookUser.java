@@ -6,6 +6,7 @@ public class FacebookUser {
     private String name;
     private Experience experience;
     private Places places;
+    private Relationships relationships;
 
     public String getUsername() {
         return username;
@@ -37,5 +38,13 @@ public class FacebookUser {
 
     public void setPlaces(Places places) {
         this.places = places;
+    }
+
+    public Relationships getRelationships() {
+        return relationships;
+    }
+
+    public void setRelationships(Relationships relationships) {
+        this.relationships = relationships;
     }
 }
