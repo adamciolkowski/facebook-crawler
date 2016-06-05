@@ -4,6 +4,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.util.List;
+
 public abstract class PageletExtractor<T> implements Extractor<T> {
 
     protected WebElement getPagelet(WebDriver webDriver, String pagelet) {
@@ -15,6 +17,9 @@ public abstract class PageletExtractor<T> implements Extractor<T> {
     }
 
     protected String extractInfo(WebElement li) {
-        return li.findElement(By.xpath(".//div[@class='fsm fwn fcg']")).getText();
+        List<WebElement> elements = li.findElements(By.xpath(".//div[@class='fsm fwn fcg']"));
+        if(elements.isEmpty())
+            return null;
+        return elements.get(0).getText();
     }
 }
