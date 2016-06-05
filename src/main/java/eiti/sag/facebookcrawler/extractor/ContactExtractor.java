@@ -6,6 +6,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.util.List;
+
 public class ContactExtractor extends PageletExtractor<ContactInfo> {
 
     @Override
@@ -23,14 +25,16 @@ public class ContactExtractor extends PageletExtractor<ContactInfo> {
     }
 
     private String extractBirthday(WebElement ulElement) {
-        WebElement li = ulElement.findElement(By.xpath(".//li[@data-privacy-fbid='8787510733']"));
-        WebElement span = getSpanWithValue(li);
-        if(!isBirthdayFieldPresent(span))
+        List<WebElement> li = ulElement.findElements(By.xpath(".//li[@data-privacy-fbid='8787510733']"));
+        if(li.isEmpty())
+            return null;
+        WebElement span = getSpanWithValue(li.get(0));
+        if(!isBirthdayFieldFilled(span))
             return null;
         return span.getText();
     }
 
-    private boolean isBirthdayFieldPresent(WebElement span) {
+    private boolean isBirthdayFieldFilled(WebElement span) {
         return !span.findElements(By.xpath(".//div[@data-field-type='339581476191384']")).isEmpty();
     }
 
