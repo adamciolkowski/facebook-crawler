@@ -3,8 +3,12 @@ package eiti.sag.facebookcrawler;
 import eiti.sag.facebookcrawler.accessor.FacebookAccessor;
 import eiti.sag.facebookcrawler.accessor.WebDriverFacebookAccessor;
 import eiti.sag.facebookcrawler.model.FacebookUser;
+import eiti.sag.facebookcrawler.repository.FacebookUserRepository;
+import eiti.sag.facebookcrawler.repository.json.JsonFacebookUserRepository;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+
+import java.io.File;
 
 public class Main {
 
@@ -18,9 +22,11 @@ public class Main {
         WebDriver webDriver = new FirefoxDriver();
         FacebookAccessor accessor = new WebDriverFacebookAccessor(webDriver);
         accessor.login(email, password);
+        File directory = new File(System.getProperty("user.home"), "facebook-users");
+        FacebookUserRepository repository = new JsonFacebookUserRepository(directory);
+
         FacebookUser user = accessor.fetchUser("zuck");
-        System.out.println(user.getName());
-        System.out.println(user.getExperience());
+        repository.save(user);
         accessor.logout();
     }
 
