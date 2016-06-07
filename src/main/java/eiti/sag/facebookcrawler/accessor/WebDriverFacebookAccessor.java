@@ -3,6 +3,7 @@ package eiti.sag.facebookcrawler.accessor;
 import eiti.sag.facebookcrawler.extractor.ContactExtractor;
 import eiti.sag.facebookcrawler.extractor.ExperienceExtractor;
 import eiti.sag.facebookcrawler.extractor.Extractor;
+import eiti.sag.facebookcrawler.extractor.FriendsIdsExtractor;
 import eiti.sag.facebookcrawler.extractor.RelationshipsExtractor;
 import eiti.sag.facebookcrawler.extractor.PlacesExtractor;
 import eiti.sag.facebookcrawler.model.ContactInfo;
@@ -12,6 +13,8 @@ import eiti.sag.facebookcrawler.model.Places;
 import eiti.sag.facebookcrawler.model.Relationships;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+
+import java.util.Collection;
 
 public class WebDriverFacebookAccessor implements FacebookAccessor {
 
@@ -23,6 +26,7 @@ public class WebDriverFacebookAccessor implements FacebookAccessor {
     private final Extractor<Places> placesExtractor = new PlacesExtractor();
     private final Extractor<Relationships> relationshipsExtractor = new RelationshipsExtractor();
     private final Extractor<ContactInfo> contactInfoExtractor = new ContactExtractor();
+    private final Extractor<Collection<String>> friendsIdsExtractor = new FriendsIdsExtractor(BASE_URL);
 
     public WebDriverFacebookAccessor(WebDriver webDriver) {
         this.webDriver = webDriver;
@@ -46,6 +50,8 @@ public class WebDriverFacebookAccessor implements FacebookAccessor {
         user.setPlaces(extract(username, "living", placesExtractor));
         user.setRelationships(extract(username, "relationship", relationshipsExtractor));
         user.setContactInfo(extract(username, "contact-info", contactInfoExtractor));
+        webDriver.get(BASE_URL + username + "/friends_all");
+        user.setFriendsIds(friendsIdsExtractor.extract(webDriver));
         return user;
     }
 

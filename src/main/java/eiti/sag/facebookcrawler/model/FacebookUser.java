@@ -1,5 +1,7 @@
 package eiti.sag.facebookcrawler.model;
 
+import java.util.Collection;
+
 public class FacebookUser {
 
     private String username;
@@ -8,6 +10,7 @@ public class FacebookUser {
     private Places places;
     private ContactInfo contactInfo;
     private Relationships relationships;
+    private Collection<String> friendsIds;
 
     public String getUsername() {
         return username;
@@ -55,5 +58,13 @@ public class FacebookUser {
 
     public void setRelationships(Relationships relationships) {
         this.relationships = relationships;
+    }
+
+    public Collection<String> getFriendsIds() {
+        return friendsIds;
+    }
+
+    public void setFriendsIds(Collection<String> friendsIds) {
+        this.friendsIds = friendsIds;
     }
 }
