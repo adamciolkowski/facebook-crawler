@@ -29,10 +29,10 @@ public class JsonFacebookUserRepository implements FacebookUserRepository {
     @Override
     public void save(FacebookUser user) {
         File file = fileFor(user.getUsername());
-        try (PrintWriter pw = new PrintWriter(new FileOutputStream(file))) {
+        try (FileWriter pw = new FileWriter(file)) {
             pw.write(gson.toJson(user));
             pw.flush();
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
     }
@@ -64,7 +64,7 @@ public class JsonFacebookUserRepository implements FacebookUserRepository {
 
     private FacebookUser readUser(File file) {
         try {
-            Reader reader = toReader(file);
+            Reader reader = new FileReader(file);
             return gson.fromJson(reader, FacebookUser.class);
         } catch (FileNotFoundException e) {
             throw new UncheckedIOException(e);
@@ -73,10 +73,6 @@ public class JsonFacebookUserRepository implements FacebookUserRepository {
 
     private File fileFor(String username) {
         return new File(directory, username + ".json");
-    }
-
-    private Reader toReader(File file) throws FileNotFoundException {
-        return new BufferedReader(new InputStreamReader(new FileInputStream(file)));
     }
 
 }
