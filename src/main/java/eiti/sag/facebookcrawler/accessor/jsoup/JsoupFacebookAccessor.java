@@ -36,9 +36,6 @@ public class JsoupFacebookAccessor implements FacebookAccessor {
     }
 
     @Override
-    public void login(String email, String password) { }
-
-    @Override
     public FacebookUser fetchUser(String username) {
         try {
             return doFetchUser(username);

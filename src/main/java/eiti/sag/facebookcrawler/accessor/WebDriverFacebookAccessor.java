@@ -32,7 +32,6 @@ public class WebDriverFacebookAccessor implements FacebookAccessor {
         this.webDriver = webDriver;
     }
 
-    @Override
     public void login(String email, String password) {
         webDriver.get(BASE_URL);
         webDriver.findElement(By.id("email")).sendKeys(email);

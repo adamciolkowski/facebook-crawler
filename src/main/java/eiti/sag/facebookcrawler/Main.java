@@ -1,6 +1,5 @@
 package eiti.sag.facebookcrawler;
 
-import eiti.sag.facebookcrawler.accessor.FacebookAccessor;
 import eiti.sag.facebookcrawler.accessor.WebDriverFacebookAccessor;
 import eiti.sag.facebookcrawler.repository.FacebookUserRepository;
 import eiti.sag.facebookcrawler.repository.json.JsonFacebookUserRepository;
@@ -21,7 +20,7 @@ public class Main {
 
     private void run(String email, String password, String username) {
         WebDriver webDriver = new FirefoxDriver();
-        FacebookAccessor accessor = new WebDriverFacebookAccessor(webDriver);
+        WebDriverFacebookAccessor accessor = new WebDriverFacebookAccessor(webDriver);
         accessor.login(email, password);
         File directory = new File(System.getProperty("user.home"), "facebook-users");
         FacebookUserRepository repository = new JsonFacebookUserRepository(directory);
