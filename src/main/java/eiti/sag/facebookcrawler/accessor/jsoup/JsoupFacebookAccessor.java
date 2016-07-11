@@ -22,7 +22,7 @@ public class JsoupFacebookAccessor implements FacebookAccessor {
     private final HtmlPageGetter htmlPageGetter;
 
     public JsoupFacebookAccessor(FacebookAuthCookies cookies) {
-        this(new JsoupHtmlGetter(cookies.asMap(), Locale.getDefault()));
+        this(new JsoupHtmlGetter(cookies.asMap(), Locale.US));
     }
 
     public JsoupFacebookAccessor(HtmlPageGetter htmlPageGetter) {
@@ -39,15 +39,24 @@ public class JsoupFacebookAccessor implements FacebookAccessor {
     }
 
     private FacebookUser doFetchUser(String username) throws IOException {
-        String html = htmlPageGetter.get(BASE_URL + username + "/friends_all");
-        Document parsed = Jsoup.parse(html);
-        return doFetchUser(parsed);
+        Document aboutPage = getPage(username, "about");
+        Document friendsPage = getPage(username, "friends_all");
+        return fetchUser(aboutPage, friendsPage);
     }
 
-    private FacebookUser doFetchUser(Document document) {
+    private Document getPage(String username, String section) throws IOException {
+        return Jsoup.parse(htmlPageGetter.get(BASE_URL + username + "/" + section));
+    }
+
+    private FacebookUser fetchUser(Document aboutPage, Document friendsPage) {
         FacebookUser user = new FacebookUser();
-        user.setFriendsIds(fetchFriendsIds(document));
+        user.setName(extractName(aboutPage));
+        user.setFriendsIds(fetchFriendsIds(friendsPage));
         return user;
+    }
+
+    private String extractName(Document document) {
+        return document.getElementById("fb-timeline-cover-name").text();
     }
 
     private List<String> fetchFriendsIds(Document document) {
