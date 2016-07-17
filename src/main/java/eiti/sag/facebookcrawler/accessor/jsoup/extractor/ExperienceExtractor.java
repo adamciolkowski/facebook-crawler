@@ -22,7 +22,8 @@ public class ExperienceExtractor implements DocumentExtractor<Experience> {
 
     private List<Education> extractEducation(Document page) {
         String cssQuery = "div[data-pnref='edu'] " +
-                "ul[class='uiList fbProfileEditExperiences _4kg _4ks'] > li";
+                "ul.uiList.fbProfileEditExperiences._4kg._4ks > " +
+                "li.experience";
         return extractEducation(page.select(cssQuery));
     }
 
@@ -48,7 +49,8 @@ public class ExperienceExtractor implements DocumentExtractor<Experience> {
 
     private List<Work> extractWorks(Document page) {
         String cssQuery = "div[data-pnref='work'] " +
-                "ul[class='uiList fbProfileEditExperiences _4kg _4ks'] > li";
+                "ul.uiList.fbProfileEditExperiences._4kg._4ks > " +
+                "li.experience";
         Elements elements = page.select(cssQuery);
         return extractWorks(elements);
     }
