@@ -35,12 +35,14 @@ public class ContactExtractor extends PageletExtractor<ContactInfo> {
     }
 
     private boolean isBirthdayFieldFilled(WebElement span) {
-        return !span.findElements(By.xpath(".//div[@data-field-type='339581476191384']")).isEmpty();
+        return span.findElements(By.xpath(".//div[@data-field-type='339581476191384']")).isEmpty();
     }
 
     private String extractGender(WebElement ulElement) {
-        WebElement li = ulElement.findElement(By.xpath(".//li[@class='_3pw9 _2pi4 _2ge8 _3ms8']"));
-        WebElement span = getSpanWithValue(li);
+        List<WebElement> li = ulElement.findElements(By.xpath(".//li[@class='_3pw9 _2pi4 _2ge8 _3ms8']"));
+        if(li.isEmpty())
+            return null;
+        WebElement span = getSpanWithValue(li.get(0));
         return span.getText();
     }
 

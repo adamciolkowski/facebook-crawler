@@ -10,18 +10,24 @@ import org.openqa.selenium.WebElement;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.Collections.emptyList;
+
 public class ExperienceExtractor extends PageletExtractor<Experience> {
 
     public Experience extract(WebDriver wd) {
         WebElement pagelet = getPagelet(wd, "eduwork");
-        List<Work> works = extractWorks(groupElement(pagelet, "work"));
-        List<Education> education = extractEducationList(groupElement(pagelet, "edu"));
+        WebElement group = groupElement(pagelet, "work");
+        List<Work> works = group == null ? emptyList() : extractWorks(group);
+        WebElement edu = groupElement(pagelet, "edu");
+        List<Education> education = edu == null ? emptyList() : extractEducationList(edu);
         return new Experience(works, education);
     }
 
     private WebElement groupElement(WebElement pagelet, String ref) {
-        WebElement e = pagelet.findElement(By.xpath(".//div[@data-pnref='" + ref + "']"));
-        return findUlElement(e);
+        List<WebElement> e = pagelet.findElements(By.xpath(".//div[@data-pnref='" + ref + "']"));
+        if(e.isEmpty())
+            return null;
+        return findUlElement(e.get(0));
     }
 
     private List<Work> extractWorks(WebElement ulElement) {
