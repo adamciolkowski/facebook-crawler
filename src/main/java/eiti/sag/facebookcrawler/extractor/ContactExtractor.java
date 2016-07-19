@@ -21,7 +21,7 @@ public class ContactExtractor extends PageletExtractor<ContactInfo> {
     private BasicInfo extractBasicInfo(WebElement ulElement) {
         String birthday = extractBirthday(ulElement);
         String gender = extractGender(ulElement);
-        return new BasicInfo(birthday, gender);
+        return new BasicInfo(birthday, gender, null);
     }
 
     private String extractBirthday(WebElement ulElement) {

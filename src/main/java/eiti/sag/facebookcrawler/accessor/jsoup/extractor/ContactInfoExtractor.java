@@ -6,6 +6,10 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
+
 public class ContactInfoExtractor implements DocumentExtractor<ContactInfo> {
 
     @Override
@@ -14,7 +18,7 @@ public class ContactInfoExtractor implements DocumentExtractor<ContactInfo> {
     }
 
     private BasicInfo extractBasicInfo(Document document) {
-        return new BasicInfo(extractBirthday(document), extractGender(document));
+        return new BasicInfo(extractBirthday(document), extractGender(document), extractLanguages(document));
     }
 
     private String extractBirthday(Document document) {
@@ -23,6 +27,15 @@ public class ContactInfoExtractor implements DocumentExtractor<ContactInfo> {
 
     private String extractGender(Document document) {
         return extractEntry(document, "_3ms8");
+    }
+
+    private List<String> extractLanguages(Document document) {
+        String cssQuery = "div.hidden_elem ul.uiList.fbProfileEditExperiences._4kg._4ks " +
+                "li._3pw9._2pi4._2ge8 div.clearfix div._4bl7._pt5 div.clearfix " +
+                "div.fsm.fwn.fcg span._50f4";
+        return document.select(cssQuery).stream()
+                .map(Element::text)
+                .collect(toList());
     }
 
     private String extractEntry(Element element, String entryClass) {
