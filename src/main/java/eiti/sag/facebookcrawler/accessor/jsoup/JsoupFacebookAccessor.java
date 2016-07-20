@@ -39,6 +39,7 @@ public class JsoupFacebookAccessor implements FacebookAccessor {
 
     private FacebookUser doFetchUser(String username) throws IOException {
         FacebookUser user = new FacebookUser();
+        user.setUsername(username);
         user.setName(new NameExtractor().extract(getPage(username, "about")));
         user.setExperience(new ExperienceExtractor().extract(getPage(username, "about?section=education")));
         user.setPlaces(new PlacesExtractor().extract(getPage(username, "about?section=living")));
