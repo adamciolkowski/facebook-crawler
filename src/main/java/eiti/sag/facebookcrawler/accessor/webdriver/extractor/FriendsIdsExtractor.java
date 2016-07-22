@@ -1,4 +1,4 @@
-package eiti.sag.facebookcrawler.extractor;
+package eiti.sag.facebookcrawler.accessor.webdriver.extractor;
 
 import com.google.common.base.Function;
 import org.apache.http.NameValuePair;

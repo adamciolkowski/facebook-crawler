@@ -1,11 +1,12 @@
-package eiti.sag.facebookcrawler.accessor;
+package eiti.sag.facebookcrawler.accessor.webdriver;
 
-import eiti.sag.facebookcrawler.extractor.ContactExtractor;
-import eiti.sag.facebookcrawler.extractor.ExperienceExtractor;
-import eiti.sag.facebookcrawler.extractor.Extractor;
-import eiti.sag.facebookcrawler.extractor.FriendsIdsExtractor;
-import eiti.sag.facebookcrawler.extractor.RelationshipsExtractor;
-import eiti.sag.facebookcrawler.extractor.PlacesExtractor;
+import eiti.sag.facebookcrawler.accessor.FacebookAccessor;
+import eiti.sag.facebookcrawler.accessor.webdriver.extractor.ContactExtractor;
+import eiti.sag.facebookcrawler.accessor.webdriver.extractor.ExperienceExtractor;
+import eiti.sag.facebookcrawler.accessor.webdriver.extractor.Extractor;
+import eiti.sag.facebookcrawler.accessor.webdriver.extractor.FriendsIdsExtractor;
+import eiti.sag.facebookcrawler.accessor.webdriver.extractor.RelationshipsExtractor;
+import eiti.sag.facebookcrawler.accessor.webdriver.extractor.PlacesExtractor;
 import eiti.sag.facebookcrawler.model.ContactInfo;
 import eiti.sag.facebookcrawler.model.Experience;
 import eiti.sag.facebookcrawler.model.FacebookUser;

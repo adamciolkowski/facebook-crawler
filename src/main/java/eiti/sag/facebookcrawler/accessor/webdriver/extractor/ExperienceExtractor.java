@@ -1,4 +1,4 @@
-package eiti.sag.facebookcrawler.extractor;
+package eiti.sag.facebookcrawler.accessor.webdriver.extractor;
 
 import eiti.sag.facebookcrawler.model.Education;
 import eiti.sag.facebookcrawler.model.Experience;

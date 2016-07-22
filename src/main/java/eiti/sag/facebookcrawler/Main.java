@@ -1,6 +1,6 @@
 package eiti.sag.facebookcrawler;
 
-import eiti.sag.facebookcrawler.accessor.WebDriverFacebookAccessor;
+import eiti.sag.facebookcrawler.accessor.webdriver.WebDriverFacebookAccessor;
 import eiti.sag.facebookcrawler.repository.FacebookUserRepository;
 import eiti.sag.facebookcrawler.repository.json.JsonFacebookUserRepository;
 import eiti.sag.facebookcrawler.visitor.FacebookUserVisitor;
