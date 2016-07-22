@@ -1,6 +1,8 @@
 package eiti.sag.facebookcrawler;
 
 import eiti.sag.facebookcrawler.accessor.webdriver.WebDriverFacebookAccessor;
+import eiti.sag.facebookcrawler.crawler.FacebookCrawler;
+import eiti.sag.facebookcrawler.crawler.SimpleFacebookCrawler;
 import eiti.sag.facebookcrawler.repository.FacebookUserRepository;
 import eiti.sag.facebookcrawler.repository.json.JsonFacebookUserRepository;
 import eiti.sag.facebookcrawler.visitor.FacebookUserVisitor;
@@ -26,8 +28,8 @@ public class Main {
         FacebookUserRepository repository = new JsonFacebookUserRepository(directory);
 
         FacebookUserVisitor visitor = new SavingFacebookUserVisitor(repository);
-        FacebookCrawler crawler = new FacebookCrawler(accessor, visitor);
-        crawler.loadRecursively(username);
+        FacebookCrawler crawler = new SimpleFacebookCrawler(accessor);
+        crawler.crawl(username, visitor, 100);
 
         accessor.logout();
     }
