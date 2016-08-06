@@ -64,8 +64,4 @@ public class WebDriverFacebookAccessor implements FacebookAccessor {
         return extractor.extract(webDriver);
     }
 
-    @Override
-    public void logout() {
-        webDriver.close();
-    }
 }

@@ -30,8 +30,6 @@ public class Main {
         FacebookUserVisitor visitor = new SavingFacebookUserVisitor(repository);
         FacebookCrawler crawler = new SimpleFacebookCrawler(accessor);
         crawler.crawl(username, visitor, 100);
-
-        accessor.logout();
     }
 
 }

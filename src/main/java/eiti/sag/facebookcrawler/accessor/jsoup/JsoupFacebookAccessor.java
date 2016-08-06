@@ -52,7 +52,4 @@ public class JsoupFacebookAccessor implements FacebookAccessor {
         return Jsoup.parse(htmlPageGetter.get(BASE_URL + username + "/" + section));
     }
 
-    @Override
-    public void logout() { }
-
 }
