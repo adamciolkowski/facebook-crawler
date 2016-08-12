@@ -1,5 +1,6 @@
 package eiti.sag.facebookcrawler.accessor.jsoup.extractor;
 
+import eiti.sag.facebookcrawler.accessor.util.UsernameParser;
 import eiti.sag.facebookcrawler.model.FamilyMember;
 import eiti.sag.facebookcrawler.model.Relationships;
 import org.jsoup.nodes.Document;
@@ -11,6 +12,12 @@ import java.util.Collection;
 import static java.util.stream.Collectors.toList;
 
 public class RelationshipsExtractor implements DocumentExtractor<Relationships> {
+
+    private final UsernameParser usernameParser;
+
+    public RelationshipsExtractor(UsernameParser usernameParser) {
+        this.usernameParser = usernameParser;
+    }
 
     @Override
     public Relationships extract(Document document) {
@@ -29,10 +36,15 @@ public class RelationshipsExtractor implements DocumentExtractor<Relationships> 
     }
 
     private FamilyMember extractFamilyMember(Element e) {
-        String link = e.select("a").attr("href");
+        String username = extractUsername(e);
         Elements div = e.select("div.fsm.fwn.fcg");
         String name = div.get(0).text();
         String type = div.get(1).text();
-        return new FamilyMember(link, name, type);
+        return new FamilyMember(username, name, type);
+    }
+
+    private String extractUsername(Element e) {
+        String link = e.select("a").attr("href");
+        return usernameParser.parseFromLink(link);
     }
 }

@@ -28,7 +28,7 @@ public class WebDriverFacebookAccessor implements FacebookAccessor {
 
     private final Extractor<Experience> experienceExtractor = new ExperienceExtractor();
     private final Extractor<Places> placesExtractor = new PlacesExtractor();
-    private final Extractor<Relationships> relationshipsExtractor = new RelationshipsExtractor();
+    private final Extractor<Relationships> relationshipsExtractor = new RelationshipsExtractor(usernameParser);
     private final Extractor<ContactInfo> contactInfoExtractor = new ContactExtractor();
     private final Extractor<Collection<String>> friendsIdsExtractor = new FriendsIdsExtractor(usernameParser);
 

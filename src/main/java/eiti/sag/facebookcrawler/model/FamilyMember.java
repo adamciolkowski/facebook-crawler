@@ -2,18 +2,18 @@ package eiti.sag.facebookcrawler.model;
 
 public class FamilyMember {
 
-    private final String link;
+    private final String username;
     private final String name;
     private final String type;
 
-    public FamilyMember(String link, String name, String type) {
-        this.link = link;
+    public FamilyMember(String username, String name, String type) {
+        this.username = username;
         this.name = name;
         this.type = type;
     }
 
-    public String getLink() {
-        return link;
+    public String getUsername() {
+        return username;
     }
 
     public String getName() {
@@ -27,7 +27,7 @@ public class FamilyMember {
     @Override
     public String toString() {
         return "FamilyMember{" +
-                "link='" + link + '\'' +
+                "username='" + username + '\'' +
                 ", name='" + name + '\'' +
                 ", type='" + type + '\'' +
                 '}';

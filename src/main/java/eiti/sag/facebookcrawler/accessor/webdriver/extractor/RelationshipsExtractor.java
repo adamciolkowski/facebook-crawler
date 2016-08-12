@@ -1,5 +1,6 @@
 package eiti.sag.facebookcrawler.accessor.webdriver.extractor;
 
+import eiti.sag.facebookcrawler.accessor.util.UsernameParser;
 import eiti.sag.facebookcrawler.model.FamilyMember;
 import eiti.sag.facebookcrawler.model.Relationships;
 import org.openqa.selenium.By;
@@ -11,6 +12,12 @@ import java.util.Collection;
 import java.util.List;
 
 public class RelationshipsExtractor extends PageletExtractor<Relationships> {
+
+    private final UsernameParser usernameParser;
+
+    public RelationshipsExtractor(UsernameParser usernameParser) {
+        this.usernameParser = usernameParser;
+    }
 
     @Override
     public Relationships extract(WebDriver wd) {
@@ -49,7 +56,8 @@ public class RelationshipsExtractor extends PageletExtractor<Relationships> {
 
     private FamilyMember fetchFamilyMember(WebElement a, WebElement div) {
         String link = a.getAttribute("href");
-        return new FamilyMember(link, a.getText(), div.getText());
+        String username = usernameParser.parseFromLink(link);
+        return new FamilyMember(username, a.getText(), div.getText());
     }
 
 }

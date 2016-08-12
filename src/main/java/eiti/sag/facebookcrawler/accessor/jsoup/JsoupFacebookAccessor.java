@@ -48,7 +48,7 @@ public class JsoupFacebookAccessor implements FacebookAccessor {
         user.setExperience(new ExperienceExtractor().extract(getSectionPage(username, "education")));
         user.setPlaces(new PlacesExtractor().extract(getSectionPage(username, "living")));
         user.setContactInfo(new ContactInfoExtractor().extract(getSectionPage(username, "contact-info")));
-        user.setRelationships(new RelationshipsExtractor().extract(getSectionPage(username, "relationship")));
+        user.setRelationships(new RelationshipsExtractor(usernameParser).extract(getSectionPage(username, "relationship")));
         user.setFriendsIds(new FriendsIdsExtractor(usernameParser).extract(getPage(username, "friends_all")));
         return user;
     }
