@@ -6,6 +6,7 @@ import eiti.sag.facebookcrawler.accessor.jsoup.extractor.ExperienceExtractor;
 import eiti.sag.facebookcrawler.accessor.jsoup.extractor.FriendsIdsExtractor;
 import eiti.sag.facebookcrawler.accessor.jsoup.extractor.NameExtractor;
 import eiti.sag.facebookcrawler.accessor.jsoup.extractor.PlacesExtractor;
+import eiti.sag.facebookcrawler.accessor.jsoup.extractor.RelationshipsExtractor;
 import eiti.sag.facebookcrawler.model.FacebookUser;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -44,6 +45,7 @@ public class JsoupFacebookAccessor implements FacebookAccessor {
         user.setExperience(new ExperienceExtractor().extract(getSectionPage(username, "education")));
         user.setPlaces(new PlacesExtractor().extract(getSectionPage(username, "living")));
         user.setContactInfo(new ContactInfoExtractor().extract(getSectionPage(username, "contact-info")));
+        user.setRelationships(new RelationshipsExtractor().extract(getSectionPage(username, "relationship")));
         user.setFriendsIds(new FriendsIdsExtractor(BASE_URL).extract(getPage(username, "friends_all")));
         return user;
     }
