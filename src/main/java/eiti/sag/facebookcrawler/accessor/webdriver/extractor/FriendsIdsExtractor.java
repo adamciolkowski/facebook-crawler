@@ -1,8 +1,7 @@
 package eiti.sag.facebookcrawler.accessor.webdriver.extractor;
 
 import com.google.common.base.Function;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.utils.URLEncodedUtils;
+import eiti.sag.facebookcrawler.accessor.util.UsernameParser;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -10,19 +9,16 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class FriendsIdsExtractor extends PageletExtractor<Collection<String>> {
 
-    private final String baseUrl;
+    private final UsernameParser usernameParser;
 
-    public FriendsIdsExtractor(String baseUrl) {
-        this.baseUrl = baseUrl;
+    public FriendsIdsExtractor(UsernameParser usernameParser) {
+        this.usernameParser = usernameParser;
     }
 
     @Override
@@ -71,21 +67,7 @@ public class FriendsIdsExtractor extends PageletExtractor<Collection<String>> {
     private String fetchFriendId(WebElement item) {
         WebElement a = item.findElement(By.xpath(".//div[@class='fsl fwb fcb']/a"));
         String link = a.getAttribute("href");
-        return extractUserId(link);
+        return usernameParser.parseFromLink(link);
     }
 
-    private String extractUserId(String link) {
-        List<NameValuePair> pairs = URLEncodedUtils.parse(URI.create(link), "UTF-8");
-        Map<String, String> map = toMap(pairs);
-        if (map.containsKey("id"))
-            return map.get("id");
-        return link.substring(baseUrl.length(), link.indexOf('?'));
-    }
-
-    private Map<String, String> toMap(List<NameValuePair> pairs) {
-        Map<String, String> map = new HashMap<>();
-        for (NameValuePair pair : pairs)
-            map.put(pair.getName(), pair.getValue());
-        return map;
-    }
 }

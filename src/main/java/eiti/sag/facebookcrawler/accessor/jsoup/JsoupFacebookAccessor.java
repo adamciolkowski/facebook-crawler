@@ -7,6 +7,7 @@ import eiti.sag.facebookcrawler.accessor.jsoup.extractor.FriendsIdsExtractor;
 import eiti.sag.facebookcrawler.accessor.jsoup.extractor.NameExtractor;
 import eiti.sag.facebookcrawler.accessor.jsoup.extractor.PlacesExtractor;
 import eiti.sag.facebookcrawler.accessor.jsoup.extractor.RelationshipsExtractor;
+import eiti.sag.facebookcrawler.accessor.util.UsernameParser;
 import eiti.sag.facebookcrawler.model.FacebookUser;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -20,6 +21,8 @@ public class JsoupFacebookAccessor implements FacebookAccessor {
     private static final String BASE_URL = "https://www.facebook.com/";
 
     private final HtmlPageGetter htmlPageGetter;
+
+    private final UsernameParser usernameParser = new UsernameParser(BASE_URL);
 
     public JsoupFacebookAccessor(FacebookAuthCookies cookies) {
         this(new JsoupHtmlGetter(cookies.asMap(), Locale.US));
@@ -46,7 +49,7 @@ public class JsoupFacebookAccessor implements FacebookAccessor {
         user.setPlaces(new PlacesExtractor().extract(getSectionPage(username, "living")));
         user.setContactInfo(new ContactInfoExtractor().extract(getSectionPage(username, "contact-info")));
         user.setRelationships(new RelationshipsExtractor().extract(getSectionPage(username, "relationship")));
-        user.setFriendsIds(new FriendsIdsExtractor(BASE_URL).extract(getPage(username, "friends_all")));
+        user.setFriendsIds(new FriendsIdsExtractor(usernameParser).extract(getPage(username, "friends_all")));
         return user;
     }
 

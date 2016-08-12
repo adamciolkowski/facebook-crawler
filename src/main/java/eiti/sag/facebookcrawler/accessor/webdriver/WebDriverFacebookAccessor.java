@@ -1,6 +1,7 @@
 package eiti.sag.facebookcrawler.accessor.webdriver;
 
 import eiti.sag.facebookcrawler.accessor.FacebookAccessor;
+import eiti.sag.facebookcrawler.accessor.util.UsernameParser;
 import eiti.sag.facebookcrawler.accessor.webdriver.extractor.ContactExtractor;
 import eiti.sag.facebookcrawler.accessor.webdriver.extractor.ExperienceExtractor;
 import eiti.sag.facebookcrawler.accessor.webdriver.extractor.Extractor;
@@ -21,13 +22,15 @@ public class WebDriverFacebookAccessor implements FacebookAccessor {
 
     private static final String BASE_URL = "https://www.facebook.com/";
 
+    private final UsernameParser usernameParser = new UsernameParser(BASE_URL);
+
     private final WebDriver webDriver;
 
     private final Extractor<Experience> experienceExtractor = new ExperienceExtractor();
     private final Extractor<Places> placesExtractor = new PlacesExtractor();
     private final Extractor<Relationships> relationshipsExtractor = new RelationshipsExtractor();
     private final Extractor<ContactInfo> contactInfoExtractor = new ContactExtractor();
-    private final Extractor<Collection<String>> friendsIdsExtractor = new FriendsIdsExtractor(BASE_URL);
+    private final Extractor<Collection<String>> friendsIdsExtractor = new FriendsIdsExtractor(usernameParser);
 
     public WebDriverFacebookAccessor(WebDriver webDriver) {
         this.webDriver = webDriver;
