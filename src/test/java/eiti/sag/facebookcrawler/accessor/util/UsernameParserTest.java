@@ -12,6 +12,13 @@ public class UsernameParserTest {
 
     @Test
     public void shouldParseUsername() {
+        String username = usernameParser.parseFromLink("https://www.facebook.com/zuck");
+
+        assertThat(username).isEqualTo("zuck");
+    }
+
+    @Test
+    public void shouldParseUsernameWhenParametersArePresent() {
         String link = "https://www.facebook.com/zuck?fref=pb&hc_location=friends_tab";
 
         String username = usernameParser.parseFromLink(link);

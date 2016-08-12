@@ -20,7 +20,12 @@ public class UsernameParser {
                 .filter(nv -> nv.getName().equals("id"))
                 .map(NameValuePair::getValue)
                 .findFirst()
-                .orElse(link.substring(baseUrl.length(), link.indexOf('?')));
+                .orElse(link.substring(baseUrl.length(), endIndex(link)));
+    }
+
+    private int endIndex(String link) {
+        int i = link.indexOf('?');
+        return i > 0 ? i : link.length();
     }
 
 }
