@@ -1,29 +1,28 @@
 package eiti.sag.facebookcrawler;
 
-import eiti.sag.facebookcrawler.accessor.webdriver.WebDriverFacebookAccessor;
+import eiti.sag.facebookcrawler.accessor.FacebookAccessor;
+import eiti.sag.facebookcrawler.accessor.jsoup.FacebookAuthCookies;
+import eiti.sag.facebookcrawler.accessor.jsoup.JsoupFacebookAccessor;
 import eiti.sag.facebookcrawler.crawler.FacebookCrawler;
 import eiti.sag.facebookcrawler.crawler.SimpleFacebookCrawler;
 import eiti.sag.facebookcrawler.repository.FacebookUserRepository;
 import eiti.sag.facebookcrawler.repository.json.JsonFacebookUserRepository;
 import eiti.sag.facebookcrawler.visitor.FacebookUserVisitor;
 import eiti.sag.facebookcrawler.visitor.SavingFacebookUserVisitor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.io.File;
 
 public class Main {
 
     public static void main(String[] args) {
-        if(args.length != 2)
-            throw new IllegalArgumentException("No Facebook email, password or username given");
-        new Main().run(args[0], args[1], args[2]);
+        if(args.length != 4)
+            throw new IllegalArgumentException("No Facebook c_user, datr, xs cookies or username given");
+        FacebookAuthCookies cookies = new FacebookAuthCookies(args[0], args[1], args[2]);
+        new Main().run(cookies, args[3]);
     }
 
-    private void run(String email, String password, String username) {
-        WebDriver webDriver = new FirefoxDriver();
-        WebDriverFacebookAccessor accessor = new WebDriverFacebookAccessor(webDriver);
-        accessor.login(email, password);
+    private void run(FacebookAuthCookies cookies, String username) {
+        FacebookAccessor accessor = new JsoupFacebookAccessor(cookies);
         File directory = new File(System.getProperty("user.home"), "facebook-users");
         FacebookUserRepository repository = new JsonFacebookUserRepository(directory);
 
