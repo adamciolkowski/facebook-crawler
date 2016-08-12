@@ -41,15 +41,19 @@ public class JsoupFacebookAccessor implements FacebookAccessor {
         FacebookUser user = new FacebookUser();
         user.setUsername(username);
         user.setName(new NameExtractor().extract(getPage(username, "about")));
-        user.setExperience(new ExperienceExtractor().extract(getPage(username, "about?section=education")));
-        user.setPlaces(new PlacesExtractor().extract(getPage(username, "about?section=living")));
-        user.setContactInfo(new ContactInfoExtractor().extract(getPage(username, "about?section=contact-info")));
+        user.setExperience(new ExperienceExtractor().extract(getSectionPage(username, "education")));
+        user.setPlaces(new PlacesExtractor().extract(getSectionPage(username, "living")));
+        user.setContactInfo(new ContactInfoExtractor().extract(getSectionPage(username, "contact-info")));
         user.setFriendsIds(new FriendsIdsExtractor(BASE_URL).extract(getPage(username, "friends_all")));
         return user;
     }
 
-    private Document getPage(String username, String section) throws IOException {
-        return Jsoup.parse(htmlPageGetter.get(BASE_URL + username + "/" + section));
+    private Document getSectionPage(String username, String section) throws IOException {
+        return getPage(username, "about?section=" + section);
+    }
+
+    private Document getPage(String username, String relativeUrl) throws IOException {
+        return Jsoup.parse(htmlPageGetter.get(BASE_URL + username + "/" + relativeUrl));
     }
 
 }
