@@ -46,8 +46,12 @@ public class ContactInfoExtractor implements DocumentExtractor<ContactInfo> {
 
     private String extractText(Element element, String cssQuery) {
         Elements e = element.select(cssQuery);
-        if(e.isEmpty())
+        if(dataFieldAbsentOrEmpty(e))
             return null;
         return e.get(0).text();
+    }
+
+    private boolean dataFieldAbsentOrEmpty(Elements e) {
+        return e.isEmpty() || !e.get(0).children().isEmpty();
     }
 }
