@@ -22,6 +22,12 @@ public class SimpleFacebookCrawler implements FacebookCrawler {
     }
 
     @Override
+    public void crawl(Collection<String> usernames, FacebookUserVisitor visitor) {
+        Queue<String> unvisited = new LinkedList<>(usernames);
+        crawl(unvisited, visitor, Integer.MAX_VALUE);
+    }
+
+    @Override
     public void crawl(String username, FacebookUserVisitor visitor, int count) {
         Queue<String> unvisited = new LinkedList<>();
         unvisited.add(username);
