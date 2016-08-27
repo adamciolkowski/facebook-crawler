@@ -1,6 +1,8 @@
 package eiti.sag.facebookcrawler.accessor.jsoup;
 
+import eiti.sag.facebookcrawler.accessor.jsoup.extractor.ContentNotAvailableException;
 import eiti.sag.facebookcrawler.accessor.FacebookAccessor;
+import eiti.sag.facebookcrawler.accessor.FetchUserFailedException;
 import eiti.sag.facebookcrawler.accessor.jsoup.extractor.ContactInfoExtractor;
 import eiti.sag.facebookcrawler.accessor.jsoup.extractor.ExperienceExtractor;
 import eiti.sag.facebookcrawler.accessor.jsoup.extractor.FriendsIdsExtractor;
@@ -38,6 +40,8 @@ public class JsoupFacebookAccessor implements FacebookAccessor {
             return doFetchUser(username);
         } catch (IOException e) {
             throw new UncheckedIOException(e);
+        } catch (ContentNotAvailableException e) {
+            throw new FetchUserFailedException(e);
         }
     }
 
